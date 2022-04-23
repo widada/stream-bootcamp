@@ -16,10 +16,16 @@
             <a href="{{ route('admin.movie.create') }}" class="btn btn-warning">Create Movie</a>
           </div>
         </div>
+        
+        @if(session()->has('success'))
+          <div class="alert alert-success"> 
+            {{ session('success') }}
+          </div>
+        @endif
 
         <div class="row">
           <div class="col-md-12">
-            <table id="example2" class="table table-bordered table-hover">
+            <table id="movie" class="table table-bordered table-hover">
               <thead>
                 <tr>
                   <th>Id</th>
@@ -45,7 +51,16 @@
                     <td>{{ $movie->categories }}</td>
                     <td>{{ $movie->casts }}</td>
                     <td>
-                      <a href="{{ route('admin.movie.edit', $movie->id) }}" class="btn btn-secondary">Edit</a>
+                      <a href="{{ route('admin.movie.edit', $movie->id) }}" class="btn btn-secondary">
+                        <i class="fas fa-edit"></i>
+                      </a>
+                      <form method="post" action="{{ route('admin.movie.destroy', $movie->id) }}">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="btn btn-danger">
+                          <i class="fas fa-trash-alt"></i>
+                        </button>
+                      </form>
                     </td>
                   </tr>
                 @endforeach
@@ -57,4 +72,10 @@
     </div>
   </div>
 </div>
+@endsection
+
+@section('js')
+  <script>
+    $('#movie').DataTable();
+  </script>
 @endsection
