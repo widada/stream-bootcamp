@@ -4,6 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MovieController;
 use App\Http\Controllers\Admin\LoginController;
+use App\Http\Controllers\Admin\TransactionController;
+
+use App\Http\Controllers\Member\RegisterController;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,15 +19,19 @@ use App\Http\Controllers\Admin\LoginController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Define member routes here
+Route::view('/', 'index');
 
+Route::get('/register', [RegisterController::class, 'index'])->name('member.register');
+
+// Admin routes
 Route::get('/admin/login', [LoginController::class, 'index'])->name('admin.login');
 Route::post('/admin/login', [LoginController::class, 'authenticate'])->name('admin.login.auth');
 
 Route::group(['prefix' => 'admin', 'middleware' => ['admin.auth']], function (){
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
+
+    Route::get('/logout', [LoginController::class, 'logout'])->name('admin.login.logout');
 
     Route::group(['prefix' => 'movie'], function () {
         Route::get('/', [MovieController::class, 'index'])->name('admin.movie');
@@ -36,5 +44,7 @@ Route::group(['prefix' => 'admin', 'middleware' => ['admin.auth']], function (){
 
         Route::delete('destroy/{id}', [MovieController::class, 'destroy'])->name('admin.movie.destroy');
     });
+
+    Route::get('/transaction', [TransactionController::class, 'index'])->name('admin.transaction');
 
 });
