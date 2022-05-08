@@ -69,7 +69,7 @@
                             <img src="{{ asset('stream/assets/images/stream.svg') }}" alt="stream" />
                         </a>
                         <div class="flex flex-col w-full font-normal lg:w-auto lg:gap-12 lg:items-center lg:flex-row">
-                            <a href="sign_in.html"
+                            <a href="{{ route('member.login') }}"
                                 class="px-8 py-3 mt-3 text-center outline outline-2 outline-stream-gray rounded-3xl lg:mt-0">
                                 <span class="text-base text-normal text-stream-gray">Sign In</span>
                             </a>
