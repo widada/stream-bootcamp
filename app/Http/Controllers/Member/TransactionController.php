@@ -26,16 +26,21 @@ class TransactionController extends Controller
 
         $params = [
             'transaction_details' => [
-                'order_id' => $transaction->code,
+                'order_id' => $transaction->transaction_code,
                 'gross_amount' => $transaction->amount
             ],
             'customer_details' => [
                 'first_name' => $customer->name,
                 'last_name' => $customer->name,
                 'email' => $customer->email
+            ],
+            'enabled_payments' => [
+                'credit_card',
+                'bca_va',
+                'bni_va',
+                'bri_va'
             ]
         ];
-
 
         \Midtrans\Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         \Midtrans\Config::$isProduction = (bool) env('MIDTRANS_IS_PRODUCTION', false);
