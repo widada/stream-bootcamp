@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\UserPremium;
 use Illuminate\Support\Carbon;
+use App\Models\Movie;
 
 class MovieController extends Controller
 {
     public function show($id)
     {
-        return view('member.movie-detail');
+        $movie = Movie::find($id);
+
+        return view('member.movie-detail', ['movie' => $movie]);
     }
 
     public function watch($id)
@@ -23,10 +26,10 @@ class MovieController extends Controller
         if ($userPremium) {
             $endOfSubscription = $userPremium->end_of_subscription;
             $date = Carbon::createFromFormat('Y-m-d', $endOfSubscription);
-            
             $isValidSubscription = $date->greaterThan(now());
             if ($isValidSubscription) {
-                return view('member.movie-watching');
+                $movie = Movie::find($id);
+                return view('member.movie-watching', ['movie' => $movie]);
             }
         }
 
