@@ -20,7 +20,7 @@
                 id="dropdown-stream">
                 <a href="#" class="transition-all hover:bg-sky-100 p-4">Watch</a>
                 <a href="#!" class="transition-all hover:bg-sky-100 p-4">Settings</a>
-                <a href="#" class="transition-all hover:bg-sky-100 p-4">Sign Out</a>
+                <a href="{{ route('member.login.logout') }}" class="transition-all hover:bg-sky-100 p-4">Sign Out</a>
             </div>
         </div>
     </div>
