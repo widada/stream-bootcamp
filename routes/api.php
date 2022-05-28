@@ -18,5 +18,7 @@ use App\Http\Controllers\Api\AuthController;
 
 Route::post('auth', [AuthController::class, 'auth']);
 
-Route::get('movies', [MovieController::class, 'index']);
-Route::get('movies/{id}', [MovieController::class, 'show']);
+Route::group(['middleware' => ['jwt.verify']], function () {
+    Route::get('movies', [MovieController::class, 'index']);
+    Route::get('movies/{id}', [MovieController::class, 'show']);
+});

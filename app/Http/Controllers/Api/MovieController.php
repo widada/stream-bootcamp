@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Movie;
+use App\Models\UserPremium;
+use Illuminate\Support\Carbon;
 
 use Illuminate\Support\Facades\Http;
 
@@ -24,6 +26,11 @@ class MovieController extends Controller
 
     public function show(Request $request, $id)
     {
+
+        $user = $request->get('user');
+
+        $userPremium = UserPremium::where('user_id', $user->id)->first();
+
         $movie = Movie::find($id);
 
         if (!$movie) {
@@ -32,6 +39,15 @@ class MovieController extends Controller
             ], 404);
         }
 
-        return response()->json($movie);
+        if ($userPremium) {
+            $endOfSubscription = $userPremium->end_of_subscription;
+            $date = Carbon::createFromFormat('Y-m-d', $endOfSubscription);
+            $isValidSubscription = $date->greaterThan(now());
+            if ($isValidSubscription) {
+                return response()->json($movie);
+            }
+        }
+
+        return response()->json(['message' => 'you dint have subscription plan']);
     }
 }
