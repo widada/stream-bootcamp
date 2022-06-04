@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MovieController;
 use App\Http\Controllers\Admin\LoginController;
 use App\Http\Controllers\Admin\TransactionController;
+use App\Http\Controllers\Admin\NotificationController;
 
 Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
 
@@ -23,3 +24,6 @@ Route::group(['prefix' => 'movie'], function () {
 });
 
 Route::get('/transaction', [TransactionController::class, 'index'])->name('admin.transaction');
+
+Route::get('/notification', [NotificationController::class, 'index'])->name('admin.notification');
+Route::post('/notification', [NotificationController::class, 'store'])->name('admin.notification.store');
