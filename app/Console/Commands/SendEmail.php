@@ -29,7 +29,7 @@ class SendEmail extends Command
      */
     public function handle()
     {
-        $emailTo = $this->ask('Kamu mau kirim email kemana?');
+        $emailTo = "widada@mail.com";
         mail::to($emailTo)->send(new EmailTest($emailTo));
 
         return $this->info('email already sent to '.$emailTo);
