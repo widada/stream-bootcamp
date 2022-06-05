@@ -68,15 +68,21 @@
                 </tr>
               </thead>
               <tbody>
-                {{-- @foreach ($movies as $movie) --}}
+                @foreach ($notifications as $notification)
                   <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
+                    <td>{{ $notification->id }}</td>
+                    <td>{{ $notification->title }}</td>
+                    <td>{{ $notification->body }}</td>
+                    <td>
+                      @if($notification->status === 'success')
+                        <span style="color:blue;">{{ $notification->status }}</span>
+                      @else
+                        <span style="color:red;">{{ $notification->status }}</span>
+                      @endif
+                    </td>
+                    <td>{{ $notification->response }}</td>
                   </tr>
-                {{-- @endforeach --}}
+                @endforeach
               </tbody>
             </table>
           </div>
